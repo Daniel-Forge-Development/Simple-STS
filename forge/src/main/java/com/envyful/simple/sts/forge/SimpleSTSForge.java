@@ -7,6 +7,7 @@ import com.envyful.api.forge.player.ForgePlayerManager;
 import com.envyful.api.gui.factory.GuiFactory;
 import com.envyful.simple.sts.forge.command.STSCommand;
 import com.envyful.simple.sts.forge.config.STSConfig;
+import com.envyful.simple.sts.forge.config.STSLocale;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
@@ -29,6 +30,7 @@ public class SimpleSTSForge {
     private ForgeCommandFactory commandFactory = new ForgeCommandFactory();
 
     private STSConfig config;
+    private STSLocale locale;
 
     @Mod.EventHandler
     public void onServerStarting(FMLPreInitializationEvent event) {
@@ -41,6 +43,7 @@ public class SimpleSTSForge {
     public void loadConfig() {
         try {
             this.config = YamlConfigFactory.getInstance(STSConfig.class);
+            this.locale = YamlConfigFactory.getInstance(STSLocale.class);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -58,5 +61,13 @@ public class SimpleSTSForge {
 
     public ForgePlayerManager getPlayerManager() {
         return this.playerManager;
+    }
+
+    public STSConfig getConfig() {
+        return this.config;
+    }
+
+    public STSLocale getLocale() {
+        return this.locale;
     }
 }
