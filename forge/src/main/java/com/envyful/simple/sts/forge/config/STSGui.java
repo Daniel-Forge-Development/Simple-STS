@@ -23,6 +23,10 @@ public class STSGui extends AbstractYamlConfig {
         super();
     }
 
+    public PartyUI getPartyUI() {
+        return this.partyUI;
+    }
+
     @ConfigSerializable
     public static class PartyUI {
 
