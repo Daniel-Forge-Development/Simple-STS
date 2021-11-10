@@ -64,6 +64,10 @@ public class STSConfig extends AbstractYamlConfig {
     }
 
     public double applyPerLevelBooster(double price, Pokemon pokemon) {
+        if (pokemon == null) {
+            return price;
+        }
+
         if (this.perLevelBooster.getValue() == 0.0) {
             return price;
         }
