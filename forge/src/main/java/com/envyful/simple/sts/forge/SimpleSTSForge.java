@@ -4,6 +4,7 @@ import com.envyful.api.forge.command.ForgeCommandFactory;
 import com.envyful.api.forge.gui.factory.ForgeGuiFactory;
 import com.envyful.api.forge.player.ForgePlayerManager;
 import com.envyful.api.gui.factory.GuiFactory;
+import com.envyful.simple.sts.forge.command.STSCommand;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
@@ -32,6 +33,7 @@ public class SimpleSTSForge {
     @Mod.EventHandler
     public void onServerStarting(FMLServerStartingEvent event) {
 
+        this.commandFactory.registerCommand(event.getServer(), new STSCommand());
     }
 
     public static SimpleSTSForge getInstance() {
