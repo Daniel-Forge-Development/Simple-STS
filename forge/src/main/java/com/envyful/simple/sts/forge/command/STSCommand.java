@@ -5,6 +5,8 @@ import com.envyful.api.command.annotate.Permissible;
 import com.envyful.api.command.annotate.SubCommands;
 import com.envyful.api.command.annotate.executor.CommandProcessor;
 import com.envyful.api.command.annotate.executor.Sender;
+import com.envyful.simple.sts.forge.SimpleSTSForge;
+import com.envyful.simple.sts.forge.ui.STSPartyUI;
 import net.minecraft.entity.player.EntityPlayerMP;
 
 @Command(
@@ -24,6 +26,6 @@ public class STSCommand {
 
     @CommandProcessor
     public void onCommand(@Sender EntityPlayerMP player, String[] args) {
-        //TODO: open UI
+        STSPartyUI.open(SimpleSTSForge.getInstance().getPlayerManager().getPlayer(player));
     }
 }

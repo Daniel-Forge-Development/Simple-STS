@@ -79,7 +79,7 @@ public class STSPartyUI {
                     Lists.newArrayList(globalConfig.getMinPriceModifiers().values())
             );
 
-            Pokemon pokemon = party.get(attribute.getSelectedSlot());
+            Pokemon pokemon = all[attribute.getSelectedSlot()];
             party.set(attribute.getSelectedSlot(), null);
 
             IPixelmonBankAccount bank = Pixelmon.moneyManager.getBankAccountUnsafe(player.getParent());
@@ -88,9 +88,9 @@ public class STSPartyUI {
             player.message(UtilChatColour.translateColourCodes(
                     '&',
                     SimpleSTSForge.getInstance().getLocale().getSoldPokemon()
-                                    .replace("%worth%", String.format("%.2f", worth)
+                                    .replace("%worth%", String.format("%.2f", worth))
                                     .replace("%pokemon%", pokemon.getLocalizedName())
-                                    .replace("%nickname%", pokemon.getNickname()))
+                                    .replace("%nickname%", pokemon.getDisplayName())
             ));
         });
 
