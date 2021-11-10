@@ -55,7 +55,7 @@ public class STSPartyUI {
             STSConfig globalConfig = SimpleSTSForge.getInstance().getConfig();
             double worth = UtilPokemonPrice.getMinPrice(
                     all[attribute.getSelectedSlot()],
-                    globalConfig.getMinValue(),
+                    globalConfig.applyPerLevelBooster(globalConfig.getMinValue(), all[attribute.getSelectedSlot()]),
                     Lists.newArrayList(globalConfig.getMinPriceModifiers().values())
             );
 
@@ -76,7 +76,7 @@ public class STSPartyUI {
             STSConfig globalConfig = SimpleSTSForge.getInstance().getConfig();
             double worth = UtilPokemonPrice.getMinPrice(
                     all[attribute.getSelectedSlot()],
-                    globalConfig.getMinValue(),
+                    globalConfig.applyPerLevelBooster(globalConfig.getMinValue(), all[attribute.getSelectedSlot()]),
                     Lists.newArrayList(globalConfig.getMinPriceModifiers().values())
             );
 
@@ -125,7 +125,7 @@ public class STSPartyUI {
                 STSConfig globalConfig = SimpleSTSForge.getInstance().getConfig();
                 double worth = UtilPokemonPrice.getMinPrice(
                         all[i],
-                        globalConfig.getMinValue(),
+                        globalConfig.applyPerLevelBooster(globalConfig.getMinValue(), all[i]),
                         Lists.newArrayList(globalConfig.getMinPriceModifiers().values())
                 );
 

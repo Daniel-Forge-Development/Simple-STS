@@ -25,6 +25,8 @@ public class STSConfig extends AbstractYamlConfig {
     private List<String> blacklistSpecs = Lists.newArrayList("pikachu shiny:1");
     private transient List<PokemonSpec> blacklist = null;
 
+    private PokeSpecPricing.MathHandler perLevelBooster = new PokeSpecPricing.MathHandler("+", 100);
+
     public STSConfig() {
         super();
     }
@@ -60,4 +62,31 @@ public class STSConfig extends AbstractYamlConfig {
 
         return false;
     }
+
+    public double applyPerLevelBooster(double price, Pokemon pokemon) {
+        if (this.perLevelBooster.getValue() == 0.0) {
+            return price;
+        }
+
+        for (int i = 1; i <= pokemon.getLevel(); i++) {
+            switch (this.perLevelBooster.getType().toLowerCase()) {
+                default : case "+" :
+                    price = price + this.perLevelBooster.getValue();
+                    break;
+                case "-" :
+                    price = price - this.perLevelBooster.getValue();
+                    break;
+                case "*" :
+                    price = price * this.perLevelBooster.getValue();
+                    break;
+                case "/" :
+                    price = price / Math.max(0.00001, this.perLevelBooster.getValue());
+                    break;
+            }
+        }
+
+        return price;
+    }
+
+
 }
