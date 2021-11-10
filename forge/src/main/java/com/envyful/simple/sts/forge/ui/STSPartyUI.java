@@ -2,6 +2,7 @@ package com.envyful.simple.sts.forge.ui;
 
 import com.envyful.api.config.type.ConfigItem;
 import com.envyful.api.forge.chat.UtilChatColour;
+import com.envyful.api.forge.concurrency.UtilForgeConcurrency;
 import com.envyful.api.forge.config.UtilConfigItem;
 import com.envyful.api.forge.items.ItemBuilder;
 import com.envyful.api.forge.items.ItemFlag;
@@ -79,19 +80,22 @@ public class STSPartyUI {
                     Lists.newArrayList(globalConfig.getMinPriceModifiers().values())
             );
 
-            Pokemon pokemon = all[attribute.getSelectedSlot()];
-            party.set(attribute.getSelectedSlot(), null);
+            UtilForgeConcurrency.runSync(() -> {
+                player.getParent().closeScreen();
+                Pokemon pokemon = all[attribute.getSelectedSlot()];
+                party.set(attribute.getSelectedSlot(), null);
 
-            IPixelmonBankAccount bank = Pixelmon.moneyManager.getBankAccountUnsafe(player.getParent());
-            bank.changeMoney((int) worth);
+                IPixelmonBankAccount bank = Pixelmon.moneyManager.getBankAccountUnsafe(player.getParent());
+                bank.changeMoney((int) worth);
 
-            player.message(UtilChatColour.translateColourCodes(
-                    '&',
-                    SimpleSTSForge.getInstance().getLocale().getSoldPokemon()
-                                    .replace("%worth%", String.format("%.2f", worth))
-                                    .replace("%pokemon%", pokemon.getLocalizedName())
-                                    .replace("%nickname%", pokemon.getDisplayName())
-            ));
+                player.message(UtilChatColour.translateColourCodes(
+                        '&',
+                        SimpleSTSForge.getInstance().getLocale().getSoldPokemon()
+                                .replace("%worth%", String.format("%.2f", worth))
+                                .replace("%pokemon%", pokemon.getLocalizedName())
+                                .replace("%nickname%", pokemon.getDisplayName())
+                ));
+            });
         });
 
         GuiFactory.guiBuilder()
