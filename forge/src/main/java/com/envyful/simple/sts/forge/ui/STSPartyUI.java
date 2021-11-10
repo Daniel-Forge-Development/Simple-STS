@@ -53,7 +53,8 @@ public class STSPartyUI {
 
         if (attribute.getSelectedSlot() != -1) {
             STSConfig globalConfig = SimpleSTSForge.getInstance().getConfig();
-            double worth = UtilPokemonPrice.getMinPrice(
+            double worth = UtilPokemonPrice.getMinPricePermissible(
+                    player.getParent(),
                     all[attribute.getSelectedSlot()],
                     globalConfig.applyPerLevelBooster(globalConfig.getMinValue(), all[attribute.getSelectedSlot()]),
                     Lists.newArrayList(globalConfig.getMinPriceModifiers().values())
@@ -74,7 +75,8 @@ public class STSPartyUI {
 
         UtilConfigItem.addConfigItem(pane, config.getConfirmItem(), (envyPlayer, clickType) -> {
             STSConfig globalConfig = SimpleSTSForge.getInstance().getConfig();
-            double worth = UtilPokemonPrice.getMinPrice(
+            double worth = UtilPokemonPrice.getMinPricePermissible(
+                    player.getParent(),
                     all[attribute.getSelectedSlot()],
                     globalConfig.applyPerLevelBooster(globalConfig.getMinValue(), all[attribute.getSelectedSlot()]),
                     Lists.newArrayList(globalConfig.getMinPriceModifiers().values())
@@ -123,7 +125,8 @@ public class STSPartyUI {
                 final int slot = i;
 
                 STSConfig globalConfig = SimpleSTSForge.getInstance().getConfig();
-                double worth = UtilPokemonPrice.getMinPrice(
+                double worth = UtilPokemonPrice.getMinPricePermissible(
+                        player.getParent(),
                         all[i],
                         globalConfig.applyPerLevelBooster(globalConfig.getMinValue(), all[i]),
                         Lists.newArrayList(globalConfig.getMinPriceModifiers().values())
