@@ -14,11 +14,17 @@ public class STSLocale extends AbstractYamlConfig {
 
     private String reloadedConfig = "&el(!) &eReloaded configs.";
 
+    private String soldPokemon = "&e&l(!) &eSold %pokemon% for %worth%";
+
     public STSLocale() {
         super();
     }
 
     public String getReloadedConfig() {
         return this.reloadedConfig;
+    }
+
+    public String getSoldPokemon() {
+        return this.soldPokemon;
     }
 }

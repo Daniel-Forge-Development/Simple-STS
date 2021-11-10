@@ -9,6 +9,7 @@ import com.envyful.simple.sts.forge.command.STSCommand;
 import com.envyful.simple.sts.forge.config.STSConfig;
 import com.envyful.simple.sts.forge.config.STSGui;
 import com.envyful.simple.sts.forge.config.STSLocale;
+import com.envyful.simple.sts.forge.player.STSAttribute;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
@@ -38,6 +39,8 @@ public class SimpleSTSForge {
     public void onServerStarting(FMLPreInitializationEvent event) {
         GuiFactory.setPlatformFactory(new ForgeGuiFactory());
         instance = this;
+
+        this.playerManager.registerAttribute(this, STSAttribute.class);
 
         this.loadConfig();
     }

@@ -16,6 +16,8 @@ import java.util.Map;
 @ConfigPath("config/SimpleSTS/config.yml")
 public class STSConfig extends AbstractYamlConfig {
 
+    private double minValue = 200.0;
+
     private Map<String, PokeSpecPricing> minPriceModifiers = ImmutableMap.of(
             "example", new PokeSpecPricing("shiny:1", new PokeSpecPricing.MathHandler("*", 2.0))
     );
@@ -25,6 +27,10 @@ public class STSConfig extends AbstractYamlConfig {
 
     public STSConfig() {
         super();
+    }
+
+    public double getMinValue() {
+        return this.minValue;
     }
 
     public Map<String, PokeSpecPricing> getMinPriceModifiers() {

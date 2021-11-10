@@ -61,6 +61,10 @@ public class STSGui extends AbstractYamlConfig {
 
         private SpriteConfig spriteConfig = new SpriteConfig();
 
+        private List<String> priceLore = Lists.newArrayList(
+                "&e&lPRICE: &a$%price%"
+        );
+
         public PartyUI() {
         }
 
@@ -90,6 +94,10 @@ public class STSGui extends AbstractYamlConfig {
 
         public ConfigItem getNoPokemonItem() {
             return this.noPokemonItem;
+        }
+
+        public List<String> getPriceLore() {
+            return this.priceLore;
         }
     }
 
