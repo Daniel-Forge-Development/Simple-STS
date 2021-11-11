@@ -86,6 +86,7 @@ public class STSPartyUI {
                 player.getParent().closeScreen();
                 Pokemon pokemon = all[attribute.getSelectedSlot()];
                 party.set(attribute.getSelectedSlot(), null);
+                attribute.setSelectedSlot(-1);
 
                 IPixelmonBankAccount bank = Pixelmon.moneyManager.getBankAccountUnsafe(player.getParent());
                 bank.changeMoney((int) worth);
