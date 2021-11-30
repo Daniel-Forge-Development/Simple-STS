@@ -16,6 +16,8 @@ public class STSLocale extends AbstractYamlConfig {
 
     private String soldPokemon = "&e&l(!) &eSold %pokemon% for %worth%";
 
+    private String minPartySize = "&c&l(!) &cYou must have at least 1 pokemon in your party to use STS";
+
     public STSLocale() {
         super();
     }
@@ -26,5 +28,9 @@ public class STSLocale extends AbstractYamlConfig {
 
     public String getSoldPokemon() {
         return this.soldPokemon;
+    }
+
+    public String getMinPartySize() {
+        return this.minPartySize;
     }
 }
