@@ -84,6 +84,11 @@ public class STSPartyUI {
 
             UtilForgeConcurrency.runSync(() -> {
                 player.getParent().closeScreen();
+
+                if (attribute.getSelectedSlot() == -1 || all.length <= attribute.getSelectedSlot()) {
+                    return;
+                }
+
                 Pokemon pokemon = all[attribute.getSelectedSlot()];
                 party.set(attribute.getSelectedSlot(), null);
                 attribute.setSelectedSlot(-1);
