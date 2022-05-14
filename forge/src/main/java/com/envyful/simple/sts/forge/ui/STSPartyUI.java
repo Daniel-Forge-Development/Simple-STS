@@ -99,7 +99,7 @@ public class STSPartyUI {
                 player.message(UtilChatColour.translateColourCodes(
                         '&',
                         SimpleSTSForge.getInstance().getLocale().getSoldPokemon()
-                                .replace("%worth%", String.format("%.2f", worth))
+                                .replace("%worth%", String.format(SimpleSTSForge.getInstance().getLocale().getEconomyFormat(), worth))
                                 .replace("%pokemon%", pokemon.getLocalizedName())
                                 .replace("%nickname%", pokemon.getDisplayName())
                 ));
@@ -165,7 +165,7 @@ public class STSPartyUI {
         List<String> lore = Lists.newArrayList();
 
         for (String s : config.getPriceLore()) {
-            lore.add(UtilChatColour.translateColourCodes('&', s.replace("%cost%", String.format("%.2f", worth))));
+            lore.add(UtilChatColour.translateColourCodes('&', s.replace("%cost%", String.format(SimpleSTSForge.getInstance().getLocale().getEconomyFormat(), worth))));
         }
 
         return lore.toArray(new String[0]);

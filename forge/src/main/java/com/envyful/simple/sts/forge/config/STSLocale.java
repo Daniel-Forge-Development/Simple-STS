@@ -18,6 +18,8 @@ public class STSLocale extends AbstractYamlConfig {
 
     private String minPartySize = "&c&l(!) &cYou must have at least 1 pokemon in your party to use STS";
 
+    private String economyFormat = "%.2f";
+
     public STSLocale() {
         super();
     }
@@ -32,5 +34,9 @@ public class STSLocale extends AbstractYamlConfig {
 
     public String getMinPartySize() {
         return this.minPartySize;
+    }
+
+    public String getEconomyFormat() {
+        return this.economyFormat;
     }
 }
