@@ -1,15 +1,15 @@
-package com.envyful.simple.sts.forge.player;
+package com.envyful.sts.forge.player;
 
 import com.envyful.api.forge.player.ForgeEnvyPlayer;
 import com.envyful.api.forge.player.attribute.AbstractForgeAttribute;
 import com.envyful.api.player.EnvyPlayer;
-import com.envyful.simple.sts.forge.SimpleSTSForge;
+import com.envyful.sts.forge.EnvySTSForge;
 
-public class STSAttribute extends AbstractForgeAttribute<SimpleSTSForge> {
+public class STSAttribute extends AbstractForgeAttribute<EnvySTSForge> {
 
     private int selectedSlot = -1;
 
-    public STSAttribute(SimpleSTSForge manager, EnvyPlayer<?> parent) {
+    public STSAttribute(EnvySTSForge manager, EnvyPlayer<?> parent) {
         super(manager, (ForgeEnvyPlayer) parent);
     }
 

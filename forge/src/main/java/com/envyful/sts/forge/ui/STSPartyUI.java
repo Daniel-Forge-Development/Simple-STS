@@ -1,4 +1,4 @@
-package com.envyful.simple.sts.forge.ui;
+package com.envyful.sts.forge.ui;
 
 import com.envyful.api.config.type.ConfigItem;
 import com.envyful.api.forge.chat.UtilChatColour;
@@ -12,10 +12,10 @@ import com.envyful.api.player.EnvyPlayer;
 import com.envyful.api.reforged.pixelmon.config.UtilPokemonPrice;
 import com.envyful.api.reforged.pixelmon.sprite.UtilSprite;
 import com.envyful.api.reforged.pixelmon.storage.UtilPixelmonPlayer;
-import com.envyful.simple.sts.forge.SimpleSTSForge;
-import com.envyful.simple.sts.forge.config.STSConfig;
-import com.envyful.simple.sts.forge.config.STSGui;
-import com.envyful.simple.sts.forge.player.STSAttribute;
+import com.envyful.sts.forge.EnvySTSForge;
+import com.envyful.sts.forge.config.STSConfig;
+import com.envyful.sts.forge.config.STSGui;
+import com.envyful.sts.forge.player.STSAttribute;
 import com.google.common.collect.Lists;
 import com.pixelmonmod.pixelmon.Pixelmon;
 import com.pixelmonmod.pixelmon.api.economy.IPixelmonBankAccount;
@@ -29,8 +29,8 @@ import java.util.List;
 public class STSPartyUI {
 
     public static void open(EnvyPlayer<EntityPlayerMP> player) {
-        STSGui.PartyUI config = SimpleSTSForge.getInstance().getGuis().getPartyUI();
-        STSAttribute attribute = player.getAttribute(SimpleSTSForge.class);
+        STSGui.PartyUI config = EnvySTSForge.getInstance().getGuis().getPartyUI();
+        STSAttribute attribute = player.getAttribute(EnvySTSForge.class);
 
         Pane pane = GuiFactory.paneBuilder()
                 .topLeftX(0)
@@ -52,7 +52,7 @@ public class STSPartyUI {
         setPokemon(player, pane);
 
         if (attribute.getSelectedSlot() != -1) {
-            STSConfig globalConfig = SimpleSTSForge.getInstance().getConfig();
+            STSConfig globalConfig = EnvySTSForge.getInstance().getConfig();
             double worth = UtilPokemonPrice.getMinPricePermissible(
                     player.getParent(),
                     all[attribute.getSelectedSlot()],
@@ -74,7 +74,7 @@ public class STSPartyUI {
         }
 
         UtilConfigItem.addConfigItem(pane, config.getConfirmItem(), (envyPlayer, clickType) -> {
-            STSConfig globalConfig = SimpleSTSForge.getInstance().getConfig();
+            STSConfig globalConfig = EnvySTSForge.getInstance().getConfig();
             double worth = UtilPokemonPrice.getMinPricePermissible(
                     player.getParent(),
                     all[attribute.getSelectedSlot()],
@@ -98,8 +98,8 @@ public class STSPartyUI {
 
                 player.message(UtilChatColour.translateColourCodes(
                         '&',
-                        SimpleSTSForge.getInstance().getLocale().getSoldPokemon()
-                                .replace("%worth%", String.format(SimpleSTSForge.getInstance().getLocale().getEconomyFormat(), worth))
+                        EnvySTSForge.getInstance().getLocale().getSoldPokemon()
+                                .replace("%worth%", String.format(EnvySTSForge.getInstance().getLocale().getEconomyFormat(), worth))
                                 .replace("%pokemon%", pokemon.getLocalizedName())
                                 .replace("%nickname%", pokemon.getDisplayName())
                 ));
@@ -107,7 +107,7 @@ public class STSPartyUI {
         });
 
         GuiFactory.guiBuilder()
-                .setPlayerManager(SimpleSTSForge.getInstance().getPlayerManager())
+                .setPlayerManager(EnvySTSForge.getInstance().getPlayerManager())
                 .addPane(pane)
                 .setCloseConsumer(envyPlayer -> {})
                 .height(config.getGuiSettings().getHeight())
@@ -118,19 +118,19 @@ public class STSPartyUI {
     private static void setPokemon(EnvyPlayer<EntityPlayerMP> player, Pane pane) {
         PlayerPartyStorage party = UtilPixelmonPlayer.getParty(player.getParent());
         Pokemon[] all = party.getAll();
-        STSGui.PartyUI config = SimpleSTSForge.getInstance().getGuis().getPartyUI();
+        STSGui.PartyUI config = EnvySTSForge.getInstance().getGuis().getPartyUI();
 
         for (int i = 0; i < 6; i++) {
             int pos = config.getPartySelectionPositions().get(i);
 
             if (i >= all.length || all[i] == null) {
                 pane.set(pos % 9, pos / 9, GuiFactory.displayable(UtilConfigItem.fromConfigItem(config.getNoPokemonItem())));
-            } else if (all[i].hasSpecFlag("untradeable") || all[i].isEgg() || SimpleSTSForge.getInstance().getConfig().isBlackListed(all[i])) {
+            } else if (all[i].hasSpecFlag("untradeable") || all[i].isEgg() || EnvySTSForge.getInstance().getConfig().isBlackListed(all[i])) {
                 pane.set(pos % 9, pos / 9, GuiFactory.displayable(UtilConfigItem.fromConfigItem(config.getUntradeablePokemonItem())));
             } else {
                 final int slot = i;
 
-                STSConfig globalConfig = SimpleSTSForge.getInstance().getConfig();
+                STSConfig globalConfig = EnvySTSForge.getInstance().getConfig();
                 double worth = UtilPokemonPrice.getMinPricePermissible(
                         player.getParent(),
                         all[i],
@@ -140,10 +140,10 @@ public class STSPartyUI {
 
                 pane.set(pos % 9, pos / 9, GuiFactory.displayableBuilder(new ItemBuilder(UtilSprite.getPokemonElement(
                         all[i],
-                        SimpleSTSForge.getInstance().getGuis().getPartyUI().getSpriteConfig()
+                        EnvySTSForge.getInstance().getGuis().getPartyUI().getSpriteConfig()
                 )).addLore(getPriceLore(config, worth)).build())
                         .clickHandler((envyPlayer, clickType) -> {
-                            STSAttribute attribute = envyPlayer.getAttribute(SimpleSTSForge.class);
+                            STSAttribute attribute = envyPlayer.getAttribute(EnvySTSForge.class);
                             attribute.setSelectedSlot(slot);
                             pane.set(config.getConfirmDisplay() % 9, config.getConfirmDisplay() / 9,
                                      GuiFactory.displayableBuilder(new ItemBuilder(UtilSprite.getPokemonElement(
@@ -165,7 +165,7 @@ public class STSPartyUI {
         List<String> lore = Lists.newArrayList();
 
         for (String s : config.getPriceLore()) {
-            lore.add(UtilChatColour.translateColourCodes('&', s.replace("%cost%", String.format(SimpleSTSForge.getInstance().getLocale().getEconomyFormat(), worth))));
+            lore.add(UtilChatColour.translateColourCodes('&', s.replace("%cost%", String.format(EnvySTSForge.getInstance().getLocale().getEconomyFormat(), worth))));
         }
 
         return lore.toArray(new String[0]);

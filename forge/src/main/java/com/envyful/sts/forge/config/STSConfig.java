@@ -1,4 +1,4 @@
-package com.envyful.simple.sts.forge.config;
+package com.envyful.sts.forge.config;
 
 import com.envyful.api.config.data.ConfigPath;
 import com.envyful.api.config.yaml.AbstractYamlConfig;
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 @ConfigSerializable
-@ConfigPath("config/SimpleSTS/config.yml")
+@ConfigPath("config/EnvySTS/config.yml")
 public class STSConfig extends AbstractYamlConfig {
 
     private double minValue = 200.0;

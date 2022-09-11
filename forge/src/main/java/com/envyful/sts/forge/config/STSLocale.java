@@ -1,4 +1,4 @@
-package com.envyful.simple.sts.forge.config;
+package com.envyful.sts.forge.config;
 
 import com.envyful.api.config.data.ConfigPath;
 import com.envyful.api.config.yaml.AbstractYamlConfig;
@@ -9,7 +9,7 @@ import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import java.util.Map;
 
 @ConfigSerializable
-@ConfigPath("config/SimpleSTS/locale.yml")
+@ConfigPath("config/EnvySTS/locale.yml")
 public class STSLocale extends AbstractYamlConfig {
 
     private String reloadedConfig = "&el(!) &eReloaded configs.";

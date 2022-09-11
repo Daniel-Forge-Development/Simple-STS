@@ -1,4 +1,4 @@
-package com.envyful.simple.sts.forge.config;
+package com.envyful.sts.forge.config;
 
 import com.envyful.api.config.data.ConfigPath;
 import com.envyful.api.config.type.ConfigInterface;
@@ -14,7 +14,7 @@ import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import java.util.List;
 
 @ConfigSerializable
-@ConfigPath("config/SimpleSTS/guis.yml")
+@ConfigPath("config/EnvySTS/guis.yml")
 public class STSGui extends AbstractYamlConfig {
 
     private PartyUI partyUI = new PartyUI();
