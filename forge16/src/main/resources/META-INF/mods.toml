@@ -5,7 +5,7 @@ issueTrackerURL="https://github.com/EnvyWare/EnvySTS"
 
 [[mods]]
 modId="envysts"
-version="1.2.0"
+version="2.0.0"
 displayName="EnvySTS"
 displayURL="https://github.com/EnvyWare"
 credits="Envyful"
