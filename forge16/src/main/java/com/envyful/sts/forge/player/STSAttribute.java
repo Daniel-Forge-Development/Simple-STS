@@ -5,12 +5,18 @@ import com.envyful.api.forge.player.attribute.AbstractForgeAttribute;
 import com.envyful.api.player.EnvyPlayer;
 import com.envyful.sts.forge.EnvySTSForge;
 
+import java.util.UUID;
+
 public class STSAttribute extends AbstractForgeAttribute<EnvySTSForge> {
 
     private int selectedSlot = -1;
 
     public STSAttribute(EnvySTSForge manager, EnvyPlayer<?> parent) {
         super(manager, (ForgeEnvyPlayer) parent);
+    }
+
+    public STSAttribute(UUID uuid) {
+        super(uuid);
     }
 
     public int getSelectedSlot() {
