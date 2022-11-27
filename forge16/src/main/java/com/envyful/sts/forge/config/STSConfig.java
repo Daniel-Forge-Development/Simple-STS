@@ -17,6 +17,8 @@ import java.util.Map;
 @ConfigPath("config/EnvySTS/config.yml")
 public class STSConfig extends AbstractYamlConfig {
 
+    private int cooldownSeconds = 3600;
+
     private double minValue = 200.0;
 
     private Map<String, PokeSpecPricing> minPriceModifiers = ImmutableMap.of(
@@ -30,6 +32,10 @@ public class STSConfig extends AbstractYamlConfig {
 
     public STSConfig() {
         super();
+    }
+
+    public int getCooldownSeconds() {
+        return this.cooldownSeconds;
     }
 
     public double getMinValue() {

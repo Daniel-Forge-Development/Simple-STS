@@ -2,11 +2,7 @@ package com.envyful.sts.forge.config;
 
 import com.envyful.api.config.data.ConfigPath;
 import com.envyful.api.config.yaml.AbstractYamlConfig;
-import com.envyful.api.reforged.pixelmon.config.PokeSpecPricing;
-import com.google.common.collect.ImmutableMap;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
-
-import java.util.Map;
 
 @ConfigSerializable
 @ConfigPath("config/EnvySTS/locale.yml")
@@ -19,6 +15,8 @@ public class STSLocale extends AbstractYamlConfig {
     private String minPartySize = "&c&l(!) &cYou must have at least 1 pokemon in your party to use STS";
 
     private String economyFormat = "%.2f";
+
+    private String onCooldown = "&c&l(!) &cYou are currently on cooldown from using STS for the next %cooldown%!";
 
     public STSLocale() {
         super();
@@ -38,5 +36,9 @@ public class STSLocale extends AbstractYamlConfig {
 
     public String getEconomyFormat() {
         return this.economyFormat;
+    }
+
+    public String getOnCooldown() {
+        return this.onCooldown;
     }
 }

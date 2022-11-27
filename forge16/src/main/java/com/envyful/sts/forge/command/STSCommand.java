@@ -6,11 +6,12 @@ import com.envyful.api.command.annotate.SubCommands;
 import com.envyful.api.command.annotate.executor.CommandProcessor;
 import com.envyful.api.command.annotate.executor.Sender;
 import com.envyful.api.forge.chat.UtilChatColour;
+import com.envyful.api.forge.player.ForgeEnvyPlayer;
 import com.envyful.sts.forge.EnvySTSForge;
+import com.envyful.sts.forge.player.STSAttribute;
 import com.envyful.sts.forge.ui.STSPartyUI;
 import com.pixelmonmod.pixelmon.api.storage.StorageProxy;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.Util;
 
 @Command(
         value = "sts",
@@ -28,14 +29,27 @@ import net.minecraft.util.Util;
 public class STSCommand {
 
     @CommandProcessor
-    public void onCommand(@Sender ServerPlayerEntity player, String[] args) {
-        if (StorageProxy.getParty(player).countAblePokemon() <= 1) {
-            player.sendMessage(UtilChatColour.colour(
-                    EnvySTSForge.getInstance().getLocale().getMinPartySize()
-            ), Util.NIL_UUID);
+    public void onCommand(@Sender ServerPlayerEntity source, String[] args) {
+        ForgeEnvyPlayer player = EnvySTSForge.getInstance().getPlayerManager().getPlayer(source);
+        STSAttribute attribute = player.getAttribute(EnvySTSForge.class);
+        if (attribute == null) {
             return;
         }
 
-        STSPartyUI.open(EnvySTSForge.getInstance().getPlayerManager().getPlayer(player));
+        if (!attribute.canSell()) {
+            player.message(UtilChatColour.colour(EnvySTSForge.getInstance().getLocale().getOnCooldown()
+                    .replace("%cooldown%", attribute.getCooldownFormatted()))
+            );
+            return;
+        }
+
+        if (StorageProxy.getParty(source).countAblePokemon() <= 1) {
+            player.message(UtilChatColour.colour(
+                    EnvySTSForge.getInstance().getLocale().getMinPartySize())
+            );
+            return;
+        }
+
+        STSPartyUI.open(player);
     }
 }
