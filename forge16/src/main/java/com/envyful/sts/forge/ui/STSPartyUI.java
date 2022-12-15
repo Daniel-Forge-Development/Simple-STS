@@ -74,7 +74,7 @@ public class STSPartyUI {
 
         UtilConfigItem.builder()
                 .combinedClickHandler(config.getConfirmItem(), (envyPlayer, clickType) -> {
-                    STSConfig globalConfig = EnvySTSForge.getInstance().getConfig();
+                    STSConfig globalConfig = EnvySTSForge.getConfig();
                     double worth = UtilPokemonPrice.getMinPricePermissible(
                             player.getParent(),
                             all[attribute.getSelectedSlot()],
@@ -106,7 +106,7 @@ public class STSPartyUI {
                 }).extendedConfigItem(player, pane, config.getConfirmItem());
 
         GuiFactory.guiBuilder()
-                .setPlayerManager(EnvySTSForge.getInstance().getPlayerManager())
+                .setPlayerManager(EnvySTSForge.getPlayerManager())
                 .addPane(pane)
                 .height(config.getGuiSettings().getHeight())
                 .title(UtilChatColour.colour(config.getGuiSettings().getTitle()))
