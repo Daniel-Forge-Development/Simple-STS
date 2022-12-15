@@ -21,36 +21,31 @@ import java.io.IOException;
 @Mod("envysts")
 public class EnvySTSForge {
 
-    public static final String VERSION = "2.0.1";
-
     private static EnvySTSForge instance;
 
-    private ForgePlayerManager playerManager = new ForgePlayerManager();
-    private ForgeCommandFactory commandFactory = new ForgeCommandFactory();
+    private final ForgePlayerManager playerManager = new ForgePlayerManager();
+    private final ForgeCommandFactory commandFactory = new ForgeCommandFactory();
 
     private STSConfig config;
     private STSLocale locale;
     private STSGui guis;
 
     public EnvySTSForge() {
+        instance = this;
         MinecraftForge.EVENT_BUS.register(this);
     }
 
     @SubscribeEvent
     public void onServerStarting(FMLServerAboutToStartEvent event) {
         GuiFactory.setPlatformFactory(new ForgeGuiFactory());
-        instance = this;
-
-        this.playerManager.registerAttribute(this, STSAttribute.class);
-
-        this.loadConfig();
+        loadConfig();
     }
 
-    public void loadConfig() {
+    public static void loadConfig() {
         try {
-            this.config = YamlConfigFactory.getInstance(STSConfig.class);
-            this.locale = YamlConfigFactory.getInstance(STSLocale.class);
-            this.guis = YamlConfigFactory.getInstance(STSGui.class);
+            instance.config = YamlConfigFactory.getInstance(STSConfig.class);
+            instance.locale = YamlConfigFactory.getInstance(STSLocale.class);
+            instance.guis = YamlConfigFactory.getInstance(STSGui.class);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -58,26 +53,23 @@ public class EnvySTSForge {
 
     @SubscribeEvent
     public void onServerStarting(RegisterCommandsEvent event) {
+        this.playerManager.registerAttribute(this, STSAttribute.class);
         this.commandFactory.registerCommand(event.getDispatcher(), new STSCommand());
     }
 
-    public static EnvySTSForge getInstance() {
-        return instance;
+    public static ForgePlayerManager getPlayerManager() {
+        return instance.playerManager;
     }
 
-    public ForgePlayerManager getPlayerManager() {
-        return this.playerManager;
+    public static STSConfig getConfig() {
+        return instance.config;
     }
 
-    public STSConfig getConfig() {
-        return this.config;
+    public static STSLocale getLocale() {
+        return instance.locale;
     }
 
-    public STSLocale getLocale() {
-        return this.locale;
-    }
-
-    public STSGui getGuis() {
-        return this.guis;
+    public static STSGui getGuis() {
+        return instance.guis;
     }
 }

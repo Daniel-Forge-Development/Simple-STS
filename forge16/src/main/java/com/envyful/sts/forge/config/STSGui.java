@@ -6,6 +6,7 @@ import com.envyful.api.config.type.ConfigItem;
 import com.envyful.api.config.type.ExtendedConfigItem;
 import com.envyful.api.config.yaml.AbstractYamlConfig;
 import com.envyful.api.reforged.pixelmon.config.SpriteConfig;
+import com.envyful.api.type.Pair;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -42,31 +43,30 @@ public class STSGui extends AbstractYamlConfig {
 
         private int confirmDisplay = 13;
 
-        private ExtendedConfigItem confirmItem = new ExtendedConfigItem(
-                "pixelmon:poke_ball", 1, (byte) 0, "&a&lCONFIRM",
-                Lists.newArrayList(), 4, 2, Maps.newHashMap()
-        );
+        private ExtendedConfigItem confirmItem = ExtendedConfigItem.builder()
+                .type("pixelmon:poke_ball")
+                .amount(1)
+                .name("&a&lCONFIRM")
+                .positions(Pair.of(4, 2))
+                .build();
 
-        private ConfigItem noPokemonItem = new ConfigItem(
-                "minecraft:barrier",
-                1, (byte) 0, "&cNo pokemon in this position",
-                Lists.newArrayList(), Maps.newHashMap()
-        );
+        private ConfigItem noPokemonItem = ConfigItem.builder()
+                .type("minecraft:barrier")
+                .name("&cNo pokemon in this position")
+                .amount(1)
+                .build();
 
-        private ConfigItem untradeablePokemonItem = new ConfigItem(
-                "minecraft:barrier",
-                1, (byte) 0, "&c&lUNTRADEABLE",
-                Lists.newArrayList(), Maps.newHashMap()
-        );
+        private ConfigItem untradeablePokemonItem = ConfigItem.builder()
+                .type("minecraft:barrier")
+                .name("&c&lUNTRADEABLE")
+                .amount(1)
+                .build();
 
         private SpriteConfig spriteConfig = new SpriteConfig();
 
         private List<String> priceLore = Lists.newArrayList(
                 "&e&lPRICE: &a$%cost%"
         );
-
-        public PartyUI() {
-        }
 
         public SpriteConfig getSpriteConfig() {
             return this.spriteConfig;

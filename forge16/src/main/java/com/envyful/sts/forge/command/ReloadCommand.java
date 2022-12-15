@@ -20,10 +20,7 @@ public class ReloadCommand {
 
     @CommandProcessor
     public void onCommand(@Sender ICommandSource sender, String[] args) {
-        EnvySTSForge.getInstance().loadConfig();
-        sender.sendMessage(UtilChatColour.colour(
-                EnvySTSForge.getInstance().getLocale().getReloadedConfig()
-        ), Util.NIL_UUID);
+        EnvySTSForge.loadConfig();
+        sender.sendMessage(UtilChatColour.colour(EnvySTSForge.getLocale().getReloadedConfig()), Util.NIL_UUID);
     }
-
 }

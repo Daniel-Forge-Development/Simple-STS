@@ -30,12 +30,10 @@ public class STSCommand {
     @CommandProcessor
     public void onCommand(@Sender ServerPlayerEntity player, String[] args) {
         if (StorageProxy.getParty(player).countAblePokemon() <= 1) {
-            player.sendMessage(UtilChatColour.colour(
-                    EnvySTSForge.getInstance().getLocale().getMinPartySize()
-            ), Util.NIL_UUID);
+            player.sendMessage(UtilChatColour.colour(EnvySTSForge.getLocale().getMinPartySize()), Util.NIL_UUID);
             return;
         }
 
-        STSPartyUI.open(EnvySTSForge.getInstance().getPlayerManager().getPlayer(player));
+        STSPartyUI.open(EnvySTSForge.getPlayerManager().getPlayer(player));
     }
 }
