@@ -16,6 +16,8 @@ public class STSLocale extends AbstractYamlConfig {
 
     private String economyFormat = "%.2f";
 
+    private String cooldown = "&c&l(!) &cOn cooldown for %cooldown%";
+
     public STSLocale() {
         super();
     }
@@ -34,5 +36,9 @@ public class STSLocale extends AbstractYamlConfig {
 
     public String getEconomyFormat() {
         return this.economyFormat;
+    }
+
+    public String getCooldown() {
+        return this.cooldown;
     }
 }

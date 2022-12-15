@@ -1,15 +1,21 @@
 package com.envyful.sts.forge.config;
 
 import com.envyful.api.config.data.ConfigPath;
+import com.envyful.api.config.type.SQLDatabaseDetails;
 import com.envyful.api.config.yaml.AbstractYamlConfig;
+import com.envyful.api.forge.player.util.UtilPlayer;
+import com.envyful.api.player.SaveMode;
+import com.envyful.api.player.SaveModeTypeAdapter;
 import com.envyful.api.reforged.pixelmon.config.PokeSpecPricing;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.pixelmonmod.api.pokemon.PokemonSpecification;
 import com.pixelmonmod.api.pokemon.PokemonSpecificationProxy;
 import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -17,10 +23,19 @@ import java.util.Map;
 @ConfigPath("config/EnvySTS/config.yml")
 public class STSConfig extends AbstractYamlConfig {
 
+    private SaveMode saveMode = SaveMode.JSON;
+    private SQLDatabaseDetails databaseDetails = new SQLDatabaseDetails(
+            "envysts", "0.0.0.0", 3306, "admin", "password", "envysts"
+    );
+
     private double minValue = 200.0;
 
     private Map<String, PokeSpecPricing> minPriceModifiers = ImmutableMap.of(
             "example", new PokeSpecPricing("shiny:1", new PokeSpecPricing.MathHandler("*", 2.0))
+    );
+
+    private Map<String, Cooldown> cooldowns = ImmutableMap.of(
+            "example", new Cooldown(1, "example.permission", 200)
     );
 
     private List<String> blacklistSpecs = Lists.newArrayList("pikachu shiny:1");
@@ -30,6 +45,14 @@ public class STSConfig extends AbstractYamlConfig {
 
     public STSConfig() {
         super();
+    }
+
+    public SaveMode getSaveMode() {
+        return this.saveMode;
+    }
+
+    public SQLDatabaseDetails getDatabaseDetails() {
+        return this.databaseDetails;
     }
 
     public double getMinValue() {
@@ -93,5 +116,46 @@ public class STSConfig extends AbstractYamlConfig {
         return price;
     }
 
+    public Cooldown getCooldown(ServerPlayerEntity player) {
+        List<Cooldown> cooldowns = Lists.newArrayList(this.cooldowns.values());
+        cooldowns.sort(Comparator.comparing(Cooldown::getWeight));
 
+        for (Cooldown cooldown : cooldowns) {
+            if (UtilPlayer.hasPermission(player, cooldown.getPermission())) {
+                return cooldown;
+            }
+        }
+
+
+        return null;
+    }
+
+    @ConfigSerializable
+    public static class Cooldown {
+
+        private int weight;
+        private String permission;
+        private long durationSeconds;
+
+        public Cooldown(int weight, String permission, long durationSeconds) {
+            this.weight = weight;
+            this.permission = permission;
+            this.durationSeconds = durationSeconds;
+        }
+
+        public Cooldown() {
+        }
+
+        public int getWeight() {
+            return this.weight;
+        }
+
+        public String getPermission() {
+            return this.permission;
+        }
+
+        public long getDurationSeconds() {
+            return this.durationSeconds;
+        }
+    }
 }

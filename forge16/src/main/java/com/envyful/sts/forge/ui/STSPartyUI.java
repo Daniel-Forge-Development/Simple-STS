@@ -92,6 +92,7 @@ public class STSPartyUI {
                         Pokemon pokemon = all[attribute.getSelectedSlot()];
                         party.set(attribute.getSelectedSlot(), null);
                         attribute.setSelectedSlot(-1);
+                        attribute.setLastUse(System.currentTimeMillis());
 
                         BankAccount bank = BankAccountProxy.getBankAccountUnsafe(player.getParent());
                         bank.add((int)worth);
