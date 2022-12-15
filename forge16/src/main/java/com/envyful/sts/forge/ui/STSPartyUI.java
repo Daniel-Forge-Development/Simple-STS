@@ -121,11 +121,13 @@ public class STSPartyUI {
 
         for (int i = 0; i < 6; i++) {
             int pos = config.getPartySelectionPositions().get(i);
+            int posX = pos % 9;
+            int posY = pos / 9;
 
             if (i >= all.length || all[i] == null) {
-                pane.set(pos % 9, pos / 9, GuiFactory.displayable(UtilConfigItem.fromConfigItem(config.getNoPokemonItem())));
+                pane.set(posX, posY, GuiFactory.displayable(UtilConfigItem.fromConfigItem(config.getNoPokemonItem())));
             } else if (all[i].isUntradeable() || all[i].isEgg() || EnvySTSForge.getConfig().isBlackListed(all[i])) {
-                pane.set(pos % 9, pos / 9, GuiFactory.displayable(UtilConfigItem.fromConfigItem(config.getUntradeablePokemonItem())));
+                pane.set(posX, posY, GuiFactory.displayable(UtilConfigItem.fromConfigItem(config.getUntradeablePokemonItem())));
             } else {
                 final int slot = i;
 
@@ -137,23 +139,23 @@ public class STSPartyUI {
                         Lists.newArrayList(globalConfig.getMinPriceModifiers().values())
                 );
 
-                pane.set(pos % 9, pos / 9, GuiFactory.displayableBuilder(new ItemBuilder(UtilSprite.getPokemonElement(
-                        all[i],
-                        EnvySTSForge.getGuis().getPartyUI().getSpriteConfig()
-                )).addLore(getPriceLore(config, worth)).build())
+                pane.set(posX, posY, GuiFactory.displayableBuilder(new ItemBuilder(UtilSprite.getPokemonElement(
+                                all[i],
+                                EnvySTSForge.getGuis().getPartyUI().getSpriteConfig()
+                        )).addLore(getPriceLore(config, worth)).build())
                         .clickHandler((envyPlayer, clickType) -> {
                             STSAttribute attribute = envyPlayer.getAttribute(EnvySTSForge.class);
                             attribute.setSelectedSlot(slot);
                             pane.set(config.getConfirmDisplay() % 9, config.getConfirmDisplay() / 9,
-                                     GuiFactory.displayableBuilder(new ItemBuilder(UtilSprite.getPokemonElement(
-                                             all[slot],
-                                             config.getSpriteConfig()
-                                     ))
-                                                                           .enchant(Enchantments.UNBREAKING, 1)
-                                                                           .itemFlag(ItemFlag.HIDE_ENCHANTS)
-                                                                           .addLore(getPriceLore(config, worth))
-                                                                           .build())
-                                             .build()
+                                    GuiFactory.displayableBuilder(new ItemBuilder(UtilSprite.getPokemonElement(
+                                                    all[slot],
+                                                    config.getSpriteConfig()
+                                            ))
+                                                    .enchant(Enchantments.UNBREAKING, 1)
+                                                    .itemFlag(ItemFlag.HIDE_ENCHANTS)
+                                                    .addLore(getPriceLore(config, worth))
+                                                    .build())
+                                            .build()
                             );
                         }).build());
             }
