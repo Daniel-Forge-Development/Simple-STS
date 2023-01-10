@@ -32,10 +32,8 @@ public class STSGui extends AbstractYamlConfig {
     public static class PartyUI {
 
         private ConfigInterface guiSettings = new ConfigInterface(
-                "Simple STS", 3, "BLOCK", ImmutableMap.of("one", new ConfigItem(
-                "minecraft:stained_glass_pane", 1, (byte) 15, " ",
-                Lists.newArrayList(), Maps.newHashMap()
-        )));
+                "Simple STS", 3, "BLOCK", ImmutableMap.of("one", ConfigItem.builder()
+                .type("minecraft:black_stained_glass_pane").amount(1).name(" ").build()));
 
         private List<Integer> partySelectionPositions = Lists.newArrayList(
                 10, 11, 12, 14, 15, 16

@@ -18,6 +18,8 @@ public class STSLocale extends AbstractYamlConfig {
 
     private String cooldown = "&c&l(!) &cOn cooldown for %cooldown%";
 
+    private String levelModifierDisplay = "Levels: +%added_cost%";
+
     public STSLocale() {
         super();
     }
@@ -40,5 +42,9 @@ public class STSLocale extends AbstractYamlConfig {
 
     public String getCooldown() {
         return this.cooldown;
+    }
+
+    public String getLevelModifierDisplay() {
+        return this.levelModifierDisplay;
     }
 }

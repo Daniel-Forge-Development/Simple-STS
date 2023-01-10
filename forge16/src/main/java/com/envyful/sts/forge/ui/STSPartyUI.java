@@ -8,13 +8,17 @@ import com.envyful.api.forge.items.ItemBuilder;
 import com.envyful.api.forge.items.ItemFlag;
 import com.envyful.api.forge.player.ForgeEnvyPlayer;
 import com.envyful.api.gui.factory.GuiFactory;
+import com.envyful.api.gui.item.Displayable;
 import com.envyful.api.gui.pane.Pane;
 import com.envyful.api.reforged.pixelmon.config.UtilPokemonPrice;
 import com.envyful.api.reforged.pixelmon.sprite.UtilSprite;
+import com.envyful.api.text.PlaceholderFactory;
 import com.envyful.sts.forge.EnvySTSForge;
+import com.envyful.sts.forge.config.DisplayablePokeSpecPricing;
 import com.envyful.sts.forge.config.STSConfig;
 import com.envyful.sts.forge.config.STSGui;
 import com.envyful.sts.forge.player.STSAttribute;
+import com.envyful.sts.forge.ui.placeholder.PriceBreakdownPlaceholder;
 import com.google.common.collect.Lists;
 import com.pixelmonmod.pixelmon.api.economy.BankAccount;
 import com.pixelmonmod.pixelmon.api.economy.BankAccountProxy;
@@ -22,6 +26,7 @@ import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
 import com.pixelmonmod.pixelmon.api.storage.PlayerPartyStorage;
 import com.pixelmonmod.pixelmon.api.storage.StorageProxy;
 import net.minecraft.enchantment.Enchantments;
+import net.minecraft.entity.player.ServerPlayerEntity;
 
 import java.util.List;
 
@@ -66,7 +71,7 @@ public class STSPartyUI {
                             ))
                                     .enchant(Enchantments.UNBREAKING, 1)
                                     .itemFlag(ItemFlag.HIDE_ENCHANTS)
-                                    .addLore(getPriceLore(config, worth))
+                                    .addLore(getPriceLore(player.getParent(), config, worth, all[attribute.getSelectedSlot()], Lists.newArrayList(EnvySTSForge.getConfig().getMinPriceModifiers().values())))
                                     .build())
                             .build()
             );
@@ -142,7 +147,7 @@ public class STSPartyUI {
                 pane.set(posX, posY, GuiFactory.displayableBuilder(new ItemBuilder(UtilSprite.getPokemonElement(
                                 all[i],
                                 EnvySTSForge.getGuis().getPartyUI().getSpriteConfig()
-                        )).addLore(getPriceLore(config, worth)).build())
+                        )).addLore(getPriceLore(player.getParent(), config, worth, all[slot], Lists.newArrayList(EnvySTSForge.getConfig().getMinPriceModifiers().values()))).build())
                         .clickHandler((envyPlayer, clickType) -> {
                             STSAttribute attribute = envyPlayer.getAttribute(EnvySTSForge.class);
                             attribute.setSelectedSlot(slot);
@@ -153,7 +158,7 @@ public class STSPartyUI {
                                             ))
                                                     .enchant(Enchantments.UNBREAKING, 1)
                                                     .itemFlag(ItemFlag.HIDE_ENCHANTS)
-                                                    .addLore(getPriceLore(config, worth))
+                                                    .addLore(getPriceLore(player.getParent(), config, worth, all[slot], Lists.newArrayList(EnvySTSForge.getConfig().getMinPriceModifiers().values())))
                                                     .build())
                                             .build()
                             );
@@ -162,12 +167,14 @@ public class STSPartyUI {
         }
     }
 
-    private static String[] getPriceLore(STSGui.PartyUI config, double worth) {
+    private static String[] getPriceLore(ServerPlayerEntity player, STSGui.PartyUI config, double worth, Pokemon pokemon, List<DisplayablePokeSpecPricing> pricing) {
         List<String> lore = Lists.newArrayList();
 
         for (String s : config.getPriceLore()) {
             lore.add(UtilChatColour.translateColourCodes('&', s.replace("%cost%", String.format(EnvySTSForge.getLocale().getEconomyFormat(), worth))));
         }
+
+        lore = PlaceholderFactory.handlePlaceholders(lore, new PriceBreakdownPlaceholder(player, pokemon, pricing));
 
         return lore.toArray(new String[0]);
     }

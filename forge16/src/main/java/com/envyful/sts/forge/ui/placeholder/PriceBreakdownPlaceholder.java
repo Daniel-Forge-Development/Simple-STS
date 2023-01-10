@@ -1,6 +1,7 @@
 package com.envyful.sts.forge.ui.placeholder;
 
 import com.envyful.api.text.parse.MultiPlaceholder;
+import com.envyful.sts.forge.EnvySTSForge;
 import com.envyful.sts.forge.config.DisplayablePokeSpecPricing;
 import com.google.common.collect.Lists;
 import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
@@ -39,6 +40,11 @@ public class PriceBreakdownPlaceholder implements MultiPlaceholder {
                 entries.add(minPriceModifier.getDisplay());
             }
         }
+
+        entries.add(EnvySTSForge.getLocale().getLevelModifierDisplay().replace("%added_cost%",
+                String.format(EnvySTSForge.getLocale().getEconomyFormat(),
+                        EnvySTSForge.getConfig().applyPerLevelBooster(EnvySTSForge.getConfig().getMinValue(), pokemon) - EnvySTSForge.getConfig().getMinValue()))
+        );
 
         return entries;
     }
