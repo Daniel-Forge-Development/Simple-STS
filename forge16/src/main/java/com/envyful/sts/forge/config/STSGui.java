@@ -63,7 +63,8 @@ public class STSGui extends AbstractYamlConfig {
         private SpriteConfig spriteConfig = new SpriteConfig();
 
         private List<String> priceLore = Lists.newArrayList(
-                "&e&lPRICE: &a$%cost%"
+                "&e&lPRICE: &a$%cost%",
+                "%price_breakdown%"
         );
 
         public SpriteConfig getSpriteConfig() {
