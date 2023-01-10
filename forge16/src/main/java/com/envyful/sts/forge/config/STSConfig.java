@@ -5,7 +5,6 @@ import com.envyful.api.config.type.SQLDatabaseDetails;
 import com.envyful.api.config.yaml.AbstractYamlConfig;
 import com.envyful.api.forge.player.util.UtilPlayer;
 import com.envyful.api.player.SaveMode;
-import com.envyful.api.player.SaveModeTypeAdapter;
 import com.envyful.api.reforged.pixelmon.config.PokeSpecPricing;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
@@ -30,8 +29,8 @@ public class STSConfig extends AbstractYamlConfig {
 
     private double minValue = 200.0;
 
-    private Map<String, PokeSpecPricing> minPriceModifiers = ImmutableMap.of(
-            "example", new PokeSpecPricing("shiny:1", new PokeSpecPricing.MathHandler("*", 2.0))
+    private Map<String, DisplayablePokeSpecPricing> minPriceModifiers = ImmutableMap.of(
+            "example", new DisplayablePokeSpecPricing("shiny:1", new PokeSpecPricing.MathHandler("*", 2.0))
     );
 
     private Map<String, Cooldown> cooldowns = ImmutableMap.of(
@@ -59,7 +58,7 @@ public class STSConfig extends AbstractYamlConfig {
         return this.minValue;
     }
 
-    public Map<String, PokeSpecPricing> getMinPriceModifiers() {
+    public Map<String, DisplayablePokeSpecPricing> getMinPriceModifiers() {
         return this.minPriceModifiers;
     }
 
