@@ -41,10 +41,12 @@ public class PriceBreakdownPlaceholder implements MultiPlaceholder {
             }
         }
 
-        entries.add(EnvySTSForge.getLocale().getLevelModifierDisplay().replace("%added_cost%",
-                String.format(EnvySTSForge.getLocale().getEconomyFormat(),
-                        EnvySTSForge.getConfig().applyPerLevelBooster(EnvySTSForge.getConfig().getMinValue(), pokemon) - EnvySTSForge.getConfig().getMinValue()))
-        );
+        if (EnvySTSForge.getConfig().isBreakdownIncludesLevels()) {
+            entries.add(EnvySTSForge.getLocale().getLevelModifierDisplay().replace("%added_cost%",
+                    String.format(EnvySTSForge.getLocale().getEconomyFormat(),
+                            EnvySTSForge.getConfig().applyPerLevelBooster(EnvySTSForge.getConfig().getMinValue(), pokemon) - EnvySTSForge.getConfig().getMinValue()))
+            );
+        }
 
         return entries;
     }

@@ -39,6 +39,7 @@ public class STSConfig extends AbstractYamlConfig {
 
     private List<String> blacklistSpecs = Lists.newArrayList("pikachu shiny:1");
     private transient List<PokemonSpecification> blacklist = null;
+    private boolean breakdownIncludesLevels = true;
 
     private PokeSpecPricing.MathHandler perLevelBooster = new PokeSpecPricing.MathHandler("+", 100);
 
@@ -127,6 +128,10 @@ public class STSConfig extends AbstractYamlConfig {
 
 
         return null;
+    }
+
+    public boolean isBreakdownIncludesLevels() {
+        return this.breakdownIncludesLevels;
     }
 
     @ConfigSerializable
