@@ -32,22 +32,19 @@ public class STSCommand {
 
     @CommandProcessor
     public void onCommand(@Sender ServerPlayerEntity player, String[] args) {
-        UtilForgeConcurrency.runSync(() -> {
-            ForgeEnvyPlayer sender = EnvySTSForge.getPlayerManager().getPlayer(player);
-            STSAttribute attribute = sender.getAttribute(EnvySTSForge.class);
+        ForgeEnvyPlayer sender = EnvySTSForge.getPlayerManager().getPlayer(player);
+        STSAttribute attribute = sender.getAttribute(EnvySTSForge.class);
 
-            if (attribute.onCooldown()) {
-                sender.message(EnvySTSForge.getLocale().getCooldown().replace("%cooldown%", attribute.getRemainingTime()));
-                return;
-            }
+        if (attribute.onCooldown()) {
+            sender.message(EnvySTSForge.getLocale().getCooldown().replace("%cooldown%", attribute.getRemainingTime()));
+            return;
+        }
 
-            if (StorageProxy.getParty(player).countAblePokemon() <= 1) {
-                player.sendMessage(UtilChatColour.colour(EnvySTSForge.getLocale().getMinPartySize()), Util.NIL_UUID);
-                return;
-            }
+        if (StorageProxy.getParty(player).countAblePokemon() <= 1) {
+            player.sendMessage(UtilChatColour.colour(EnvySTSForge.getLocale().getMinPartySize()), Util.NIL_UUID);
+            return;
+        }
 
-            STSPartyUI.open(sender);
-        });
-
+        STSPartyUI.open(sender);
     }
 }
