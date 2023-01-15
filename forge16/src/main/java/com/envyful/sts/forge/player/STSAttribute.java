@@ -50,7 +50,7 @@ public class STSAttribute extends AbstractForgeAttribute<EnvySTSForge> {
             return false;
         }
 
-        return (System.currentTimeMillis() - this.lastUse) <= cooldown.getDurationSeconds();
+        return (System.currentTimeMillis() - this.lastUse) <= TimeUnit.SECONDS.toMillis(cooldown.getDurationSeconds());
     }
 
     public String getRemainingTime() {
