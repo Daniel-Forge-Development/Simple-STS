@@ -169,12 +169,11 @@ public class STSPartyUI {
 
     private static String[] getPriceLore(ServerPlayerEntity player, STSGui.PartyUI config, double worth, Pokemon pokemon, List<DisplayablePokeSpecPricing> pricing) {
         List<String> lore = Lists.newArrayList();
+        lore = PlaceholderFactory.handlePlaceholders(lore, new PriceBreakdownPlaceholder(player, pokemon, pricing));
 
         for (String s : config.getPriceLore()) {
             lore.add(UtilChatColour.translateColourCodes('&', s.replace("%cost%", String.format(EnvySTSForge.getLocale().getEconomyFormat(), worth))));
         }
-
-        lore = PlaceholderFactory.handlePlaceholders(lore, new PriceBreakdownPlaceholder(player, pokemon, pricing));
 
         return lore.toArray(new String[0]);
     }
