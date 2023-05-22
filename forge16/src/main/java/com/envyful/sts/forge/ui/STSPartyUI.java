@@ -8,7 +8,6 @@ import com.envyful.api.forge.items.ItemBuilder;
 import com.envyful.api.forge.items.ItemFlag;
 import com.envyful.api.forge.player.ForgeEnvyPlayer;
 import com.envyful.api.gui.factory.GuiFactory;
-import com.envyful.api.gui.item.Displayable;
 import com.envyful.api.gui.pane.Pane;
 import com.envyful.api.reforged.pixelmon.config.UtilPokemonPrice;
 import com.envyful.api.reforged.pixelmon.sprite.UtilSprite;
