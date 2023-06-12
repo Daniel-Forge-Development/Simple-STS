@@ -1,13 +1,16 @@
 package com.envyful.sts.forge.player;
 
 import com.envyful.api.forge.player.ForgeEnvyPlayer;
+import com.envyful.api.forge.player.ForgePlayerManager;
 import com.envyful.api.forge.player.attribute.AbstractForgeAttribute;
 import com.envyful.api.player.EnvyPlayer;
+import com.envyful.api.player.PlayerManager;
 import com.envyful.api.player.save.attribute.DataDirectory;
 import com.envyful.api.time.UtilTimeFormat;
 import com.envyful.sts.forge.EnvySTSForge;
 import com.envyful.sts.forge.config.STSConfig;
 import com.envyful.sts.forge.config.STSQueries;
+import net.minecraft.entity.player.ServerPlayerEntity;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,12 +26,8 @@ public class STSAttribute extends AbstractForgeAttribute<EnvySTSForge> {
 
     private long lastUse = -1L;
 
-    public STSAttribute(EnvySTSForge manager, EnvyPlayer<?> parent) {
-        super(manager, (ForgeEnvyPlayer) parent);
-    }
-
-    public STSAttribute(UUID uuid) {
-        super(uuid);
+    public STSAttribute(EnvySTSForge manager, ForgePlayerManager playerManager) {
+        super(manager, playerManager);
     }
 
     public int getSelectedSlot() {
@@ -44,7 +43,7 @@ public class STSAttribute extends AbstractForgeAttribute<EnvySTSForge> {
     }
 
     public boolean onCooldown() {
-        STSConfig.Cooldown cooldown = EnvySTSForge.getConfig().getCooldown(this.getParent().getParent());
+        STSConfig.Cooldown cooldown = EnvySTSForge.getConfig().getCooldown(this.parent.getParent());
 
         if (cooldown == null || this.lastUse == -1L) {
             return false;
@@ -54,7 +53,7 @@ public class STSAttribute extends AbstractForgeAttribute<EnvySTSForge> {
     }
 
     public String getRemainingTime() {
-        STSConfig.Cooldown cooldown = EnvySTSForge.getConfig().getCooldown(this.getParent().getParent());
+        STSConfig.Cooldown cooldown = EnvySTSForge.getConfig().getCooldown(this.parent.getParent());
         return UtilTimeFormat.getFormattedDuration(TimeUnit.SECONDS.toMillis(cooldown.getDurationSeconds() -
                 TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - this.lastUse)));
     }
