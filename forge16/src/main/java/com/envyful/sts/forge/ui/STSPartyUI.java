@@ -48,7 +48,7 @@ public class STSPartyUI {
                 .build();
 
         UtilConfigInterface.fillBackground(pane, config.getGuiSettings());
-        party.retrieveAll();
+        party.retrieveAll("STS");
 
         Pokemon[] all = party.getAll();
 
