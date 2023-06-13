@@ -24,7 +24,7 @@ import java.io.IOException;
 )
 public class EnvySTSForge {
 
-    public static final String VERSION = "2.1.6";
+    public static final String VERSION = "2.1.7";
 
     private static EnvySTSForge instance;
 
