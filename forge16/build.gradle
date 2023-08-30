@@ -49,8 +49,8 @@ dependencies {
 
 shadowJar {
     configurations = [project.configurations.shadow]
-    setArchiveBaseName(rootProject.name + '-Forge')
     setArchiveClassifier('')
+    setArchiveBaseName("${rootProject.name}-Forge")
 
     relocate('org.spongepowered.configurate', 'com.envyful.sts.forge.shade.configurate')
     relocate('org.yaml.snakeyaml', 'com.envyful.sts.forge.shade.snakeyaml')
@@ -64,5 +64,6 @@ shadowJar {
     exclude "**/module-info.class"
 }
 
-jar.finalizedBy('reobfJar')
+jar.finalizedBy('shadowJar')
+shadowJar.finalizedBy('reobfJar')
 build.finalizedBy('versionedRelease')
