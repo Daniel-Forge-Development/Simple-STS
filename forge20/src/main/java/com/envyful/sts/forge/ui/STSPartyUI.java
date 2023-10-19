@@ -24,6 +24,7 @@ import com.pixelmonmod.pixelmon.api.economy.BankAccountProxy;
 import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
 import com.pixelmonmod.pixelmon.api.storage.PlayerPartyStorage;
 import com.pixelmonmod.pixelmon.api.storage.StorageProxy;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.enchantment.Enchantments;
 
@@ -37,8 +38,8 @@ public class STSPartyUI {
 
     public static void open(ForgeEnvyPlayer player) {
         STSGui.PartyUI config = EnvySTSForge.getGuis().getPartyUI();
-        STSAttribute attribute = player.getAttribute(EnvySTSForge.class);
-        PlayerPartyStorage party = StorageProxy.getParty(player.getParent());
+        STSAttribute attribute = player.getAttribute(STSAttribute.class);
+        PlayerPartyStorage party = StorageProxy.getPartyNow(player.getParent());
 
         Pane pane = GuiFactory.paneBuilder()
                 .topLeftX(0)
@@ -98,7 +99,7 @@ public class STSPartyUI {
                         attribute.setSelectedSlot(-1);
                         attribute.setLastUse(System.currentTimeMillis());
 
-                        BankAccount bank = BankAccountProxy.getBankAccountUnsafe(player.getParent());
+                        BankAccount bank = BankAccountProxy.getBankAccountNow(player.getParent());
                         bank.add((int)worth);
 
                         player.message(UtilChatColour.colour(
@@ -119,7 +120,7 @@ public class STSPartyUI {
     }
 
     private static void setPokemon(ForgeEnvyPlayer player, Pane pane) {
-        PlayerPartyStorage party = StorageProxy.getParty(player.getParent());
+        PlayerPartyStorage party = StorageProxy.getPartyNow(player.getParent());
         Pokemon[] all = party.getAll();
         STSGui.PartyUI config = EnvySTSForge.getGuis().getPartyUI();
 
@@ -148,7 +149,7 @@ public class STSPartyUI {
                                 EnvySTSForge.getGuis().getPartyUI().getSpriteConfig()
                         )).addLore(getPriceLore(player.getParent(), config, worth, all[slot], Lists.newArrayList(EnvySTSForge.getConfig().getMinPriceModifiers().values()))).build())
                         .clickHandler((envyPlayer, clickType) -> {
-                            STSAttribute attribute = envyPlayer.getAttribute(EnvySTSForge.class);
+                            STSAttribute attribute = envyPlayer.getAttribute(STSAttribute.class);
                             attribute.setSelectedSlot(slot);
                             pane.set(config.getConfirmDisplay() % 9, config.getConfirmDisplay() / 9,
                                     GuiFactory.displayableBuilder(new ItemBuilder(UtilSprite.getPokemonElement(
@@ -166,15 +167,15 @@ public class STSPartyUI {
         }
     }
 
-    private static String[] getPriceLore(ServerPlayer player, STSGui.PartyUI config, double worth, Pokemon pokemon, List<DisplayablePokeSpecPricing> pricing) {
+    private static Component[] getPriceLore(ServerPlayer player, STSGui.PartyUI config, double worth, Pokemon pokemon, List<DisplayablePokeSpecPricing> pricing) {
         List<String> lore = config.getPriceLore();
         lore = PlaceholderFactory.handlePlaceholders(lore, new PriceBreakdownPlaceholder(player, pokemon, pricing));
-        List<String> newLore = Lists.newArrayList();
+        List<Component> newLore = Lists.newArrayList();
 
         for (String s : lore) {
-            newLore.add(UtilChatColour.translateColourCodes('&', s.replace("%cost%", String.format(EnvySTSForge.getLocale().getEconomyFormat(), worth))));
+            newLore.add(UtilChatColour.colour(s.replace("%cost%", String.format(EnvySTSForge.getLocale().getEconomyFormat(), worth))));
         }
 
-        return newLore.toArray(new String[0]);
+        return newLore.toArray(new Component[0]);
     }
 }

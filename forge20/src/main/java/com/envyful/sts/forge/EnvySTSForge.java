@@ -5,6 +5,7 @@ import com.envyful.api.config.yaml.YamlConfigFactory;
 import com.envyful.api.database.Database;
 import com.envyful.api.database.impl.SimpleHikariDatabase;
 import com.envyful.api.forge.command.ForgeCommandFactory;
+import com.envyful.api.forge.command.parser.ForgeAnnotationCommandParser;
 import com.envyful.api.forge.gui.factory.ForgeGuiFactory;
 import com.envyful.api.forge.player.ForgePlayerManager;
 import com.envyful.api.gui.factory.GuiFactory;
@@ -33,7 +34,7 @@ public class EnvySTSForge {
     private static EnvySTSForge instance;
 
     private final ForgePlayerManager playerManager = new ForgePlayerManager();
-    private final ForgeCommandFactory commandFactory = new ForgeCommandFactory();
+    private final ForgeCommandFactory commandFactory = new ForgeCommandFactory(ForgeAnnotationCommandParser::new, playerManager);
 
     private STSConfig config;
     private STSLocale locale;
@@ -54,7 +55,7 @@ public class EnvySTSForge {
             this.playerManager.setSaveManager(new JsonSaveManager<>(this.playerManager));
         }
 
-        this.playerManager.registerAttribute(this, STSAttribute.class);
+        this.playerManager.registerAttribute(STSAttribute.class);
 
 
         if (this.config.getSaveMode() == SaveMode.MYSQL) {
@@ -84,7 +85,7 @@ public class EnvySTSForge {
     @SubscribeEvent
     public void onServerStarting(RegisterCommandsEvent event) {
 
-        this.commandFactory.registerCommand(event.getDispatcher(), new STSCommand());
+        this.commandFactory.registerCommand(event.getDispatcher(), this.commandFactory.parseCommand(new STSCommand()));
     }
 
     public static ForgePlayerManager getPlayerManager() {
@@ -105,5 +106,9 @@ public class EnvySTSForge {
 
     public static Database getDatabase() {
         return instance.database;
+    }
+
+    public static EnvySTSForge getInstance() {
+        return instance;
     }
 }

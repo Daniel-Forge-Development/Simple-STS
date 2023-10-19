@@ -68,7 +68,7 @@ public class STSConfig extends AbstractYamlConfig {
             List<PokemonSpecification> blackList = Lists.newArrayList();
 
             for (String blacklistSpec : this.blacklistSpecs) {
-                blackList.add(PokemonSpecificationProxy.create(blacklistSpec));
+                blackList.add(PokemonSpecificationProxy.create(blacklistSpec).get());
             }
 
             this.blacklist = blackList;

@@ -10,8 +10,6 @@ import com.envyful.api.reforged.pixelmon.config.SpriteConfig;
 import com.envyful.api.type.Pair;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import org.lwjgl.system.CallbackI;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 
 import java.util.List;
@@ -53,6 +51,7 @@ public class STSGui extends AbstractYamlConfig {
                 .amount(1)
                 .name("&a&lCONFIRM")
                 .positions(Pair.of(4, 2))
+                .nbt("PokeBallID", new ConfigItem.NBTValue("string", "poke_ball"))
                 .build();
 
         private ConfigItem noPokemonItem = ConfigItem.builder()
@@ -121,7 +120,7 @@ public class STSGui extends AbstractYamlConfig {
     @ConfigSerializable
     public static class PcUI {
 
-        private PaginatedConfigInterface guiSettings = PaginatedConfigInterface.builder()
+        private PaginatedConfigInterface guiSettings = PaginatedConfigInterface.paginatedBuilder()
                 .title("Bulk Sell PC")
                 .height(6)
                 .displayPageButtonsAtLimits()

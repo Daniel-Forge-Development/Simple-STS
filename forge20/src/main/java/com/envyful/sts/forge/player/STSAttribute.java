@@ -1,7 +1,7 @@
 package com.envyful.sts.forge.player;
 
 import com.envyful.api.forge.player.ForgePlayerManager;
-import com.envyful.api.forge.player.attribute.AbstractForgeAttribute;
+import com.envyful.api.forge.player.attribute.ManagedForgeAttribute;
 import com.envyful.api.player.save.attribute.DataDirectory;
 import com.envyful.api.time.UtilTimeFormat;
 import com.envyful.sts.forge.EnvySTSForge;
@@ -15,14 +15,14 @@ import java.sql.SQLException;
 import java.util.concurrent.TimeUnit;
 
 @DataDirectory("config/players/EnvySTS/")
-public class STSAttribute extends AbstractForgeAttribute<EnvySTSForge> {
+public class STSAttribute extends ManagedForgeAttribute<EnvySTSForge> {
 
     private transient int selectedSlot = -1;
 
     private long lastUse = -1L;
 
-    public STSAttribute(EnvySTSForge manager, ForgePlayerManager playerManager) {
-        super(manager, playerManager);
+    public STSAttribute(ForgePlayerManager playerManager) {
+        super(EnvySTSForge.getInstance(), playerManager);
     }
 
     public int getSelectedSlot() {
